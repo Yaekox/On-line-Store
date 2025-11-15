@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Imperial Armoury Market</title>
+<style>
+/* === MILITARY COLOR THEME === */
+body {
+  font-family: "Trebuchet MS", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #2f3e2f; /* dark olive green */
+  color: #e0e0c0; /* light khaki text */
+}
+header {
+  background: #1e281e; /* darker camo green */
+  color: #c0c080;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 4px solid #556b2f; /* olive border */
+  text-shadow: 1px 1px #000;
+}
+header h1 {
+  margin: 0;
+  letter-spacing: 4px;
+  font-size: 2em;
+}
+header p {
+  font-style: italic;
+  color: #dcdca0;
+}
+
+.products {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+
+.product {
+  background: #3b4a3b; /* medium olive box */
+  border: 1px solid #707b50;
+  border-radius: 8px;
+  width: 250px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.product:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 12px rgba(255,255,128,0.4);
+}
+.product img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid #8b9a46;
+}
+.product h3 {
+  color: #f0e68c;
+  margin: 10px 0 5px;
+}
+.product p {
+  color: #cfcf9c;
+}
+button {
+  background: #8b9a46; /* olive drab button */
+  color: #1a1a1a;
+  border: none;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+button:hover {
+  background: #a5b75d;
+}
+
+.cart, .order-form {
+  margin: 20px auto;
+  padding: 20px;
+  background: #2b352b;
+  border: 1px solid #707b50;
+  border-radius: 8px;
+  max-width: 600px;
+}
+.cart h2, .order-form h2 {
+  color: #dcdca0;
+  border-bottom: 1px solid #707b50;
+  padding-bottom: 5px;
+}
+label {
+  display: block;
+  margin-top: 10px;
+}
+input, textarea, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #707b50;
+  background: #404d3e;
+  color: #e0e0c0;
+}
+select option {
+  background: #2b352b;
+}
+footer {
+  text-align: center;
+  margin: 30px;
+  color: #c0c080;
+  border-top: 1px solid #556b2f;
+  padding-top: 10px;
+  font-size: 0.9em;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>I M P E R I A L &nbsp; A R M O U R Y</h1>
+  <p>"Built for Battle, Designed for Victory."</p>
+</header>
+
+<section class="products">
+  <div class="product">
+    <img src="type99.jpg" width="300" height="250" alt="type99">
+    <h3>Type 99 Main Battle Tank</h3>
+    <p>₱50,000,000</p>
+    <button onclick="addToCart('Type 99 Main Battle Tank', 50000000)">Add to Cart</button>
+  </div>
+
+  <div class="product">
+    <img src="dongfeng41.webp"  width="300" height="250" alt="dongfeng41">
+    <h3>Dongfeng 41 ICBM</h3>
+    <p>₱120,000,000</p>
+    <button onclick="addToCart('Dongfeng 41 ICBM', 120000000)">Add to Cart</button>
+  </div>
+
+  <div class="product">
+    <img src="zbd04.jpeg" width="300" height="250" alt="zbd04">
+    <h3>ZBD-04 Infantry Fighting Vehicle</h3>
+    <p>₱25,000,000</p>
+    <button onclick="addToCart('ZBD-04 Infantry Fighting Vehicle', 25000000)">Add to Cart</button>
+  </div>
+
+  <div class="product">
+    <img src="chengdu.jpg"  width="300" height="250" alt="chengdu">
+    <h3>Chengdu J-20 Stealth Fighter</h3>
+    <p>₱80,000,000</p>
+    <button onclick="addToCart('Chengdu J-20 Stealth Fighter', 80000000)">Add to Cart</button>
+  </div>
+
+  <div class="product">
+    <img src="dongfengwarrior.jpg"  width="300" height="250" alt="dongfengwarrior">
+    <h3>Dongfeng Warrior EQ2050</h3>
+    <p>₱8,000,000</p>
+    <button onclick="addToCart('Dongfeng Warrior EQ2050', 8000000)">Add to Cart</button>
+  </div>
+</section>
+
+<section class="cart">
+  <h2>Shopping Cart</h2>
+  <ul id="cart-items"></ul>
+  <p><strong>Total: ₱<span id="cart-total">0</span></strong></p>
+</section>
+
+<section class="order-form">
+  <h2>Order Form</h2>
+  <form onsubmit="submitOrder(event)">
+    <label>Full Name</label>
+    <input type="text" id="name" required>
+
+    <label>Email</label>
+    <input type="email" id="email" required>
+
+    <label>Phone Number</label>
+    <input type="text" id="phone" required>
+
+    <label>Shipping Address</label>
+    <textarea id="address" required></textarea>
+
+    <label>Payment Method</label>
+    <select id="payment">
+      <option value="COD">Cash on Delivery</option>
+      <option value="GCash">GCash</option>
+      <option value="Bank">Bank Transfer</option>
+    </select>
+
+    <button type="submit">Submit Order</button>
+  </form>
+</section>
+
+<footer>
+  Brgy 837, Zone 91, Pandacan, Manila | Contact: +63 912 345 6789 <br>
+  &copy; 2025 Imperial Armoury. All Rights Reserved.
+</footer>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(product, price) {
+  cart.push({ product, price });
+  total += price;
+  displayCart();
+}
+
+function displayCart() {
+  const cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML = '';
+  cart.forEach(item => {
+    let li = document.createElement('li');
+    li.textContent = item.product + " - ₱" + item.price.toLocaleString();
+    cartItems.appendChild(li);
+  });
+  document.getElementById('cart-total').textContent = total.toLocaleString();
+}
+
+function submitOrder(event) {
+  event.preventDefault();
+  if (cart.length === 0) { alert("Your cart is empty!"); return; }
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const address = document.getElementById('address').value;
+  const payment = document.getElementById('payment').value;
+
+  alert(
+    "Thank you, " + name + "!\n\nOrder Summary:\n" +
+    cart.map(item => "- " + item.product + " ₱" + item.price.toLocaleString()).join("\n") +
+    "\n\nTotal: ₱" + total.toLocaleString() +
+    "\nPayment Method: " + payment +
+    "\n\nWe will ship to:\n" + address
+  );
+
+  cart = [];
+  total = 0;
+  displayCart();
+  document.querySelector("form").reset();
+}
+</script>
+
+</body>
+</html>
